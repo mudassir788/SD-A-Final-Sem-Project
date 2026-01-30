@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Anomaly Detection System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <svg class="logo-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#2563EB;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="32" cy="32" r="30" fill="url(#logoGradient)" />
+                        <path d="M32 12 L42 32 L32 28 L22 32 Z" fill="white" opacity="0.9" />
+                        <circle cx="32" cy="42" r="4" fill="white" opacity="0.8" />
+                        <path d="M32 42 L32 50" stroke="white" stroke-width="2" opacity="0.6" />
+                    </svg>
+                    <div class="title-group">
+                        <h1>Code Anomaly Detector</h1>
+                        <p>Advanced ML-powered code analysis</p>
+                    </div>
+                </div>
+                <span class="version">v2.0</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Panel: Input -->
+            <section class="input-section">
+                <h2>Paste Your Code</h2>
+                <textarea id="codeInput" placeholder="Paste your Python code here..." rows="15"></textarea>
+                <button id="analyzeBtn" class="btn btn-primary">Analyze Code</button>
+                <div id="loadingIndicator" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p>Analyzing code...</p>
+                </div>
+            </section>
+
+            <!-- Right Panel: Results -->
+            <section class="results-section">
+                <h2>Analysis Results</h2>
+
+                <!-- Phases Display -->
+                <div class="phases">
+                    <div class="phase">
+                        <span class="phase-num">1</span>
+                        <span class="phase-name">Extract Metrics</span>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="phase">
+                        <span class="phase-num">2</span>
+                        <span class="phase-name">Generate Embedding</span>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="phase">
+                        <span class="phase-num">3</span>
+                        <span class="phase-name">Calculate Score</span>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="phase">
+                        <span class="phase-num">4</span>
+                        <span class="phase-name">Display Results</span>
+                    </div>
+                </div>
+
+                <!-- Results Display -->
+                <div id="resultsContainer" class="results-container hidden">
+                    <!-- Classification Card -->
+                    <div class="result-card classification-card">
+                        <div class="card-header">Classification</div>
+                        <div class="classification-result">
+                            <div class="classification-label" id="classificationLabel"></div>
+                            <div class="classification-score" id="classificationScore"></div>
+                        </div>
+                    </div>
+
+                    <!-- Anomaly Score Card -->
+                    <div class="result-card score-card">
+                        <div class="card-header">Anomaly Score</div>
+                        <div class="score-display">
+                            <div class="score-bar">
+                                <div class="score-fill" id="scoreFill"></div>
+                            </div>
+                            <div class="score-value" id="scoreValue"></div>
+                            <div class="score-threshold">Threshold < 6 NORMAL |> 7 ANOMALOUS</div>
+                        </div>
+                    </div>
+
+                    <!-- Structural Metrics Card -->
+                    <div class="result-card metrics-card">
+                        <div class="card-header">Structural Metrics</div>
+                        <div class="metrics-grid">
+                            <div class="metric">
+                                <span class="metric-label">Functions</span>
+                                <span class="metric-value" id="metricFunctions">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Loops</span>
+                                <span class="metric-value" id="metricLoops">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">If Statements</span>
+                                <span class="metric-value" id="metricIfs">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Max Depth</span>
+                                <span class="metric-value" id="metricDepth">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Scores Card -->
+                    <div class="result-card detailed-card">
+                        <div class="card-header">Detailed Scores</div>
+                        <div class="detailed-scores">
+                            <div class="score-item">
+                                <span class="score-name">Semantic Score</span>
+                                <span class="score-val" id="semanticScore">-</span>
+                            </div>
+                            <div class="score-item">
+                                <span class="score-name">Structural Score</span>
+                                <span class="score-val" id="structuralScore">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error Display -->
+                    <div id="errorContainer" class="error-container hidden">
+                        <div class="error-message" id="errorMessage"></div>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="empty-state">
+                    <p>Paste code and click "Analyze Code" to see results</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
